@@ -1,0 +1,332 @@
+@import "tailwindcss";
+
+/* 主题切换用 class 策略，而不是跟随系统 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------- */
+/*  语义色板：亮 / 暗两套，组件只引用语义名                            */
+/* ---------------------------------------------------------------- */
+
+:root {
+  --bg: #f5f6fa;
+  --surface: #ffffff;
+  --surface-2: #eef0f6;
+  --surface-3: #e3e7f0;
+  --line: rgba(16, 18, 28, 0.09);
+  --line-strong: rgba(16, 18, 28, 0.16);
+  --fg: #0f1117;
+  --fg-muted: #5c6375;
+  --fg-subtle: #8a91a3;
+  --primary: #4f46e5;
+  --primary-soft: rgba(79, 70, 229, 0.1);
+  --primary-fg: #ffffff;
+  --accent: #0e7490;
+  --danger: #dc2626;
+  --danger-soft: rgba(220, 38, 38, 0.1);
+  --success: #059669;
+  --ring: rgba(79, 70, 229, 0.4);
+  --shadow-card: 0 1px 2px rgba(16, 18, 28, 0.04), 0 8px 24px -12px rgba(16, 18, 28, 0.14);
+  --shadow-power: 0 10px 30px -10px rgba(79, 70, 229, 0.45);
+}
+
+.dark {
+  --bg: #08090d;
+  --surface: #0e1016;
+  --surface-2: #15181f;
+  --surface-3: #1d212b;
+  --line: rgba(255, 255, 255, 0.075);
+  --line-strong: rgba(255, 255, 255, 0.14);
+  --fg: #f1f2f6;
+  --fg-muted: #969cab;
+  --fg-subtle: #666d7e;
+  --primary: #6366f1;
+  --primary-soft: rgba(99, 102, 241, 0.14);
+  --primary-fg: #ffffff;
+  --accent: #22d3ee;
+  --danger: #f43f5e;
+  --danger-soft: rgba(244, 63, 94, 0.14);
+  --success: #34d399;
+  --ring: rgba(99, 102, 241, 0.5);
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 12px 28px -16px rgba(0, 0, 0, 0.8);
+  --shadow-power: 0 12px 32px -12px rgba(99, 102, 241, 0.6);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-primary: var(--primary);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-fg: var(--primary-fg);
+  --color-accent: var(--accent);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-success: var(--success);
+
+  --font-sans: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system,
+    "Microsoft YaHei UI", "PingFang SC", sans-serif;
+  --font-mono: "Cascadia Mono", "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+
+/* ---------------------------------------------------------------- */
+/*  基础层                                                            */
+/* ---------------------------------------------------------------- */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--line);
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow: hidden;
+    user-select: none;
+    cursor: default;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  input {
+    font: inherit;
+    color: inherit;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--surface-3);
+    border-radius: 99px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+/* ---------------------------------------------------------------- */
+/*  氛围背景                                                          */
+/* ---------------------------------------------------------------- */
+
+.ambient {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(520px 300px at 6% -8%, color-mix(in oklab, var(--primary) 22%, transparent), transparent 72%),
+    radial-gradient(420px 260px at 104% 6%, color-mix(in oklab, var(--accent) 14%, transparent), transparent 74%);
+}
+
+.dark .ambient {
+  opacity: 0.85;
+}
+
+:root:not(.dark) .ambient {
+  opacity: 0.5;
+}
+
+/* ---------------------------------------------------------------- */
+/*  动效                                                              */
+/* ---------------------------------------------------------------- */
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--danger) 45%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 10px color-mix(in oklab, var(--danger) 0%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--danger) 0%, transparent);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 45%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 5px color-mix(in oklab, var(--accent) 0%, transparent);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 1.8s cubic-bezier(0.22, 0.8, 0.3, 1) infinite;
+}
+
+.animate-breathe {
+  animation: breathe 1.2s ease-in-out infinite;
+}
+
+.animate-fade-up {
+  animation: fade-up 0.24s cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+
+.animate-blink {
+  animation: blink 1.2s ease-in-out infinite;
+}
+
+/* 数字统一等宽、不跳动 */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ---------------------------------------------------------------- */
+/*  灵动岛浮窗（独立透明窗口，运行=绿 / 暂停=红）                      */
+/* ---------------------------------------------------------------- */
+
+body.island,
+body.island #root {
+  background: transparent;
+}
+
+.island-root {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.island-pill {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: #0a0b10;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    0 12px 34px -14px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  color: #f1f2f6;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.island-pill.is-running {
+  border-color: rgba(52, 211, 153, 0.38);
+  box-shadow:
+    0 12px 34px -14px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(52, 211, 153, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.island-pill.is-paused {
+  border-color: rgba(244, 63, 94, 0.42);
+  box-shadow:
+    0 12px 34px -14px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(244, 63, 94, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.island-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.island-pill.is-running .island-dot {
+  background: #34d399;
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.9);
+  animation: island-dot-pulse 1.5s ease-in-out infinite;
+}
+
+.island-pill.is-paused .island-dot {
+  background: #f43f5e;
+  box-shadow: 0 0 10px rgba(244, 63, 94, 0.9);
+}
+
+.island-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.island-spacer {
+  flex: 1 1 auto;
+}
+
+.island-count {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #a7aebd;
+  white-space: nowrap;
+}
+
+.island-unit {
+  font-size: 10px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.island-hint {
+  font-size: 10.5px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+@keyframes island-dot-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
