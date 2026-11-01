@@ -10,7 +10,14 @@
 [![Tauri](https://img.shields.io/badge/Tauri-2.x-24C8DB?logo=tauri&logoColor=white)](https://tauri.app)
 [![Rust](https://img.shields.io/badge/Rust-1.77%2B-000000?logo=rust&logoColor=white)](https://www.rust-lang.org)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev)
+[![Release](https://img.shields.io/github/v/release/166AWA/ClickFlow-?color=22c55e&label=release)](../../releases)
 [![License](https://img.shields.io/badge/license-MIT-22c55e)](#-许可)
+
+</div>
+
+<div align="center">
+
+[![下载 ClickFlow.exe](https://img.shields.io/badge/%E2%AC%87%20%E4%B8%8B%E8%BD%BD-ClickFlow.exe-22c55e?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/166AWA/ClickFlow-/releases/latest/download/ClickFlow.exe)
 
 </div>
 
@@ -40,11 +47,17 @@ ClickFlow 是一个用 **Rust + Tauri v2** 写的 Windows 连点器。后端直�
 
 ## 下载与运行
 
-1. 从 [Releases](../../releases) 下载 `ClickFlow.exe`（或自行构建，见下文）。
-2. 双击运行，无需安装。
+**[⬇ 下载 ClickFlow.exe（最新版）](https://github.com/166AWA/ClickFlow-/releases/latest/download/ClickFlow.exe)**
+
+> 当前版本 **v1.0.0** · 前往 [Releases](../../releases) 查看全部版本与更新日志。
+
+1. 下载 `ClickFlow.exe`（单文件，免安装）。
+2. 双击运行。
 3. 默认热键为 **F6**（同一键开关）；按下即开始连点，再按停止。
 
 > 首次运行若热键被其他程序占用，界面会给出提示，换一个键即可。
+>
+> 程序未做代码签名，Windows 可能弹出 SmartScreen 提示，点「更多信息 → 仍要运行」即可。
 
 ---
 
